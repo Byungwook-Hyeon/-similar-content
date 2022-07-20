@@ -1,0 +1,76 @@
+############################################
+#### Server
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+
+
+############################################
+####  Spring
+spring:
+  datasource:
+    writer:
+      jdbc-url: jdbc:postgresql://<<postgres.contents.write.host>>:<<postgres.contents.write.port>>,<<postgres.contents.read.host>>:<<postgres.contents.read.port>>/<<postgres.contents.read.db.mylgdb>>?targetServerType=primary&ApplicationName=${spring.application.name}
+      username: <<postgres.contents.write.username>>
+      password: <<postgres.contents.write.password>>
+      minimum-idle: 5
+      maximum-pool-size: 5
+    reader:
+      jdbc-url: jdbc:postgresql://<<postgres.contents.write.host>>:<<postgres.contents.write.port>>,<<postgres.contents.read.host>>:<<postgres.contents.read.port>>/<<postgres.contents.read.db.mylgdb>>?targetServerType=preferSecondary&loadBalanceHosts=true&ApplicationName=${spring.application.name}
+      username: <<postgres.contents.read.username>>
+      password: <<postgres.contents.read.password>>
+      minimum-idle: 5
+      maximum-pool-size: 5
+
+
+  ## Cache - Redis
+  cache:
+    type: none
+
+
+
+############################################
+####  Logging
+logging:
+  level:
+    com.lguplus.fleta: DEBUG
+    org.hibernate:
+      SQL: DEBUG
+
+
+
+############################################
+#### Other Domain Application Service
+service:
+  programming:
+    url: http://programming.fleta.com
+  searchword:
+    url: http://searchword.fleta.com
+  settings:
+    url: http://settings.fleta.com
+  vodlookup:
+    url: http://vodlookup.fleta.com
+  channel:
+    url: http://channel.fleta.com
+  subscriber:
+    url: http://subscriber.fleta.com
+
+
+
+############################################
+#### hotvod parameters
+hotvod:
+  filteringsite:
+    dir: /NAS_DATA/web/smartux/iptv/filteringsite/
+
+
+
+############################################
+#### CTC log server
+ctc:
+  local:
+    path: /tmp

@@ -1,0 +1,76 @@
+############################################
+#### Server
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+
+
+############################################
+####  Spring
+spring:
+  datasource:
+    writer:
+      jdbc-url: jdbc:postgresql://<<postgres.contents.write.host>>:<<postgres.contents.write.port>>,<<postgres.contents.read.host>>:<<postgres.contents.read.port>>/<<postgres.contents.read.db.mylgdb>>?targetServerType=primary&ApplicationName=${spring.application.name}
+      username: <<postgres.contents.write.username>>
+      password: <<postgres.contents.write.password>>
+    reader:
+      jdbc-url: jdbc:postgresql://<<postgres.contents.write.host>>:<<postgres.contents.write.port>>,<<postgres.contents.read.host>>:<<postgres.contents.read.port>>/<<postgres.contents.read.db.mylgdb>>?targetServerType=preferSecondary&loadBalanceHosts=true&ApplicationName=${spring.application.name}
+      username: <<postgres.contents.read.username>>
+      password: <<postgres.contents.read.password>>
+
+  #### Cache - Redis
+  cache:
+    type: redis
+  redis:
+    cluster:
+      nodes: [<<redis.cluster.nodes>>]
+  kafka:
+    bootstrap-servers: <<kafka.dbsync.plaintext.bootstrapservers>>
+
+
+
+############################################
+####  Logging
+logging:
+  level:
+    com.lguplus.fleta: INFO
+    org.hibernate:
+      SQL: INFO
+
+
+
+############################################
+#### Other Domain Application Service
+service:
+  programming:
+    url: http://programming:8080
+  searchword:
+    url: http://searchword:8080
+  settings:
+    url: http://settings:8080
+  vodlookup:
+    url: http://vodlookup:8080
+  channel:
+    url: http://channel:8080
+  subscriber:
+    url: http://subscriber:8080
+
+
+
+############################################
+#### hotvod parameters
+hotvod:
+  filteringsite:
+    dir: /NAS_DATA/web/smartux/iptv/filteringsite/
+
+
+
+############################################
+#### CTC log server
+ctc:
+  local:
+    path: /tmp
