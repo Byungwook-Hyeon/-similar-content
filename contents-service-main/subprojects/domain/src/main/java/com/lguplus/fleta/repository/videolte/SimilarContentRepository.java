@@ -13,4 +13,6 @@ public interface SimilarContentRepository {
 
     SimilarContentEntity getSimilarContentList(SimilarRequestDto similarRequestDto);
     SimilarContentMetaEntity getContentMetaList(String albumId);
+
+    List<SimilarContentMetaEntity> getContentMetaList(Iterable<String> albumId);
 }
