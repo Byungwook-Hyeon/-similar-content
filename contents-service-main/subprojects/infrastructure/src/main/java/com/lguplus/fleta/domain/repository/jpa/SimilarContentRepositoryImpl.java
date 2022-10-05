@@ -30,4 +30,8 @@ public class SimilarContentRepositoryImpl implements SimilarContentRepository {
     public SimilarContentMetaEntity getContentMetaList(String albumId) {
         return similarContentMetaJpaRepository.findByIds(albumId);
     }
+
+    public List<SimilarContentMetaEntity> getContentMetaList(Iterable<String> albumIds) {
+        return similarContentMetaJpaRepository.findAllById(albumIds);
+    }
 }

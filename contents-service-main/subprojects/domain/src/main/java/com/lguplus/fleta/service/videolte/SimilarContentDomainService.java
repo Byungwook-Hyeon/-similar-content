@@ -35,19 +35,14 @@ public class SimilarContentDomainService {
     public List<SimilarContentDto> getContentMetaList(SimilarRequestDto similarRequestDto) {
         String[] albums = similarRequestDto.getSimilarContent().split("\\^");
 
-        List<SimilarContentDto> resultList = new ArrayList<>();
-
-        for(String album : albums) {
-            SimilarContentMetaEntity contentMeta = similarContentRepository.getContentMetaList(album);
-            if(contentMeta != null) {
-                SimilarContentDto result = new SimilarContentDto();
-                result = similarContentListMapper.toDto(contentMeta);
-                result.setImgUrl(imageServerDomainService.getImageServerUrl(ImageServerType.DEFAULT));
-                result.setStillImgUrl(imageServerDomainService.getImageServerUrl(ImageServerType.STILLCUT));
-                result.setResultType("ALB");
-
-                resultList.add(result);
-            }
+        List<SimilarContentMetaEntity> contentList = similarContentRepository.getContentMetaList(List.of(albums));
+        ArrayList<SimilarContentDto> resultList  = new ArrayList<>();
+        for(SimilarContentMetaEntity entity : contentList) {
+            SimilarContentDto result = similarContentListMapper.toDto(entity);
+            result.setImgUrl(imageServerDomainService.getImageServerUrl(ImageServerType.DEFAULT));
+            result.setStillImgUrl(imageServerDomainService.getImageServerUrl(ImageServerType.STILLCUT));
+            result.setResultType("ALB");
+            resultList.add(result);
         }
         return resultList;
     }
